@@ -1,0 +1,6 @@
+@DemoDangTin_HostAddress = http://localhost:5286
+
+GET {{DemoDangTin_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
