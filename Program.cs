@@ -5,7 +5,10 @@ using DemoDangTin.Interface.Service;
 using DemoDangTin.MappingProfiles;
 using DemoDangTin.Repository;
 using DemoDangTin.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +43,26 @@ builder.Services.Scan(scan => scan
 );
 
 builder.Services.AddControllers();
+var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!);
+var securityKey = new SymmetricSecurityKey(key);
+builder.Services.AddSingleton(securityKey);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(option =>
+    {
+        option.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = securityKey,
+                                
+            ClockSkew = TimeSpan.Zero
+        };
+    }
+    );
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

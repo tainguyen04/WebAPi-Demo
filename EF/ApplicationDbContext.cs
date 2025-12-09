@@ -8,5 +8,6 @@ namespace DemoDangTin.EF
         {
         }
         public DbSet<Entities.BaiDang> BaiDangs { get; set; }
+        public DbSet<Entities.User> Users { get; set; }
     }
 }

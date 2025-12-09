@@ -16,6 +16,10 @@ namespace DemoDangTin.MappingProfiles
             CreateMap<UpdateBaiDangRequest,BaiDang>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<AuthenticationRequest, User>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<User, AuthenticationResponse>();
         }
     }
 }

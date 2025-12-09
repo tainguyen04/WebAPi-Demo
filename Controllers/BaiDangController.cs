@@ -1,4 +1,5 @@
 ﻿using DemoDangTin.DTO.Request;
+using DemoDangTin.DTO.Response;
 using DemoDangTin.Interface.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace DemoDangTin.Controllers
             _baiDangService = baiDangService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<ActionResult<List<BaiDangResponse>>> GetAllAsync()
         {
             try
             {
@@ -30,7 +31,7 @@ namespace DemoDangTin.Controllers
             }
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBaiDangByIdAsync([FromRoute] int id)
+        public async Task<ActionResult<BaiDangResponse>> GetBaiDangByIdAsync([FromRoute] int id)
         {
             try
             {
@@ -45,7 +46,7 @@ namespace DemoDangTin.Controllers
             }
         }
         [HttpGet("date/{date}")]
-        public async Task<IActionResult> GetBaiDangByDateAsync([FromRoute] DateTime date)
+        public async Task<ActionResult<List<BaiDangResponse>>> GetBaiDangByDateAsync([FromRoute] DateTime date)
         {
             try
             {
