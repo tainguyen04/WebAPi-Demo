@@ -1,5 +1,7 @@
+using CloudinaryDotNet;
 using DemoDangTin.EF;
 using DemoDangTin.Infrastructure;
+using DemoDangTin.Infrastructure.Photos;
 using DemoDangTin.Interface.Repository;
 using DemoDangTin.Interface.Service;
 using DemoDangTin.MappingProfiles;
@@ -63,6 +65,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     }
     );
+builder.Services.AddSingleton(sp =>
+{
+    var cloudinarySettings = builder.Configuration.GetSection("CloudinarySettings").Get<CloudinarySettings>();
+    var account = new Account(cloudinarySettings.CloudName, cloudinarySettings.ApiKey, cloudinarySettings.ApiSecret);
+    return new Cloudinary(account);
+});
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
